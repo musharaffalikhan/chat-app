@@ -1,7 +1,10 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 import { ProfileProvider } from "./Auth/AuthContext";
 import PrivateRoute from "./Components/PrivateRoute";
+import PublicRoute from "./Components/PublicRoute";
+// import PublicRoute from "./Components/PublicRoute";
+
 //Pages
 import Home from "./Pages/Home";
 import Signin from "./Pages/Signin";
@@ -11,17 +14,14 @@ const Router = () => {
     <>
       <ProfileProvider>
         <BrowserRouter>
-          <Routes>
-            <Route path="/signin" element={<Signin />} />
-            <Route
-              path="/"
-              element={
-                <PrivateRoute>
-                  <Home />
-                </PrivateRoute>
-              }
-            />
-          </Routes>
+          <Switch>
+            <PublicRoute path="/signin">
+              <Signin />
+            </PublicRoute>
+            <PrivateRoute path="/">
+              <Home />
+            </PrivateRoute>
+          </Switch>
         </BrowserRouter>
       </ProfileProvider>
     </>
