@@ -11,7 +11,7 @@ import {
   toaster,
 } from "rsuite";
 import Google from "@rsuite/icons/legacy/Google";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { auth, dataBase } from "../Firebase/Firebase";
 import { ref, serverTimestamp, set } from "firebase/database";
 
