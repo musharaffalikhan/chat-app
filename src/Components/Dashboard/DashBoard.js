@@ -1,12 +1,28 @@
+import { ref, set } from "firebase/database";
 import React from "react";
-import { Button, Divider, Drawer } from "rsuite";
+import { Button, Divider, Drawer, Message, toaster } from "rsuite";
 import { useProfile } from "../../Auth/AuthContext";
+import { dataBase } from "../../Firebase/Firebase";
 import EditableInput from "../EditableInput";
 
 const DashBoard = ({ onSignout }) => {
   const { profile } = useProfile();
   const onSave = async (newData) => {
-    console.log(newData);
+    const userNicknameRef = ref(dataBase, `/profiles/${profile.uid}/name`);
+    try {
+      await set(userNicknameRef, newData);
+      toaster.push(
+        <Message type="success" closable>
+          Nickname has been updated
+        </Message>
+      );
+    } catch (error) {
+      toaster.push(
+        <Message type="error" closable>
+          {error.message}
+        </Message>
+      );
+    }
   };
   return (
     <>
