@@ -11,9 +11,15 @@ import {
   toaster,
 } from "rsuite";
 import Google from "@rsuite/icons/legacy/Google";
-import { GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import {
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+} from "firebase/auth";
 import { auth, dataBase } from "../Firebase/Firebase";
 import { ref, serverTimestamp, set } from "firebase/database";
+import Facebook from "@rsuite/icons/legacy/Facebook";
 
 const Signin = () => {
   // functions
@@ -43,6 +49,9 @@ const Signin = () => {
   const onGoogleSignIn = () => {
     signInWithProvider(new GoogleAuthProvider());
   };
+  const onFacebookSignIn = () => {
+    signInWithProvider(new FacebookAuthProvider());
+  };
 
   return (
     <Container>
@@ -63,6 +72,15 @@ const Signin = () => {
                   onClick={onGoogleSignIn}
                 >
                   Continue with Google
+                </Button>
+                <Button
+                  block
+                  color="blue"
+                  appearance="primary"
+                  startIcon={<Facebook />}
+                  onClick={onFacebookSignIn}
+                >
+                  Continue with Facebook
                 </Button>
               </div>
             </Panel>
