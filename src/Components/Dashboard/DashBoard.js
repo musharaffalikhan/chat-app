@@ -4,6 +4,7 @@ import { Button, Divider, Drawer, Message, toaster } from "rsuite";
 import { useProfile } from "../../Auth/AuthContext";
 import { dataBase } from "../../Firebase/Firebase";
 import EditableInput from "../EditableInput";
+import AvatarUploadBtn from "./AvatarUploadBtn";
 import ProviderBlock from "./ProviderBlock";
 
 const DashBoard = ({ onSignout }) => {
@@ -40,6 +41,7 @@ const DashBoard = ({ onSignout }) => {
           onSave={onSave}
           label={<h6 className="mb-2">Nickname</h6>}
         />
+        <AvatarUploadBtn/>
 
         {/* <Button block color="red" appearance="primary" onClick={onSignout} size="sm">
           Sign out
