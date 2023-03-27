@@ -43,9 +43,9 @@ const DashBoard = ({ onSignout }) => {
         />
         <AvatarUploadBtn/>
 
-        {/* <Button block color="red" appearance="primary" onClick={onSignout} size="sm">
+        <Button block color="red" appearance="primary" onClick={onSignout} size="sm">
           Sign out
-        </Button> */}
+        </Button>
       </Drawer.Body>
     </>
   );
