@@ -10,6 +10,7 @@ import {
   uploadBytes,
   ref as storageRef,
 } from "firebase/storage";
+import ProfileAvatar from "./ProfileAvatar";
 
 const fileInputTypes = ".png, .jpeg, .jpg";
 const acceptedFileTypes = ["image/png", "image/jpeg"];
@@ -90,6 +91,11 @@ const AvatarUploadBtn = () => {
   };
   return (
     <div className="mt-3 text-center">
+      <ProfileAvatar
+        src={profile.avatar.avatar}
+        name={profile.name}
+        className="width-200 height-200 img-fullsize font-huge"
+      />
       <div>
         <label
           htmlFor="avatar-upload"
