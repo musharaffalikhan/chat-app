@@ -33,7 +33,7 @@ const DashBoard = ({ onSignout }) => {
       </Drawer.Header>
       <Drawer.Body>
         <h4>Hey, {profile.name}</h4>
-        <ProviderBlock /> 
+        <ProviderBlock />
         <Divider />
         <EditableInput
           name="nickname"
@@ -41,9 +41,14 @@ const DashBoard = ({ onSignout }) => {
           onSave={onSave}
           label={<h6 className="mb-2">Nickname</h6>}
         />
-        <AvatarUploadBtn/>
-
-        <Button block color="red" appearance="primary" onClick={onSignout} size="sm">
+        <AvatarUploadBtn />
+        <Button
+          block
+          color="red"
+          appearance="primary"
+          onClick={onSignout}
+          size="sm"
+        >
           Sign out
         </Button>
       </Drawer.Body>
