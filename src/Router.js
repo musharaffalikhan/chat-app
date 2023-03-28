@@ -5,7 +5,7 @@ import PrivateRoute from "./Components/Routes/PrivateRoute";
 import PublicRoute from "./Components/Routes/PublicRoute";
 
 //Pages
-import Home from "./Pages/Home";
+import Home from "./Pages/Home/Home";
 import Signin from "./Pages/Signin";
 
 const Router = () => {
