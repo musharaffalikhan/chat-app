@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Divider } from "rsuite";
+import { Divider } from "rsuite";
 import CreateRoomBtn from "./Dashboard/CreateRoomBtn";
 import DashboardToggle from "./Dashboard/DashboardToggle";
 import ChatroomList from "./Rooms/ChatroomList";

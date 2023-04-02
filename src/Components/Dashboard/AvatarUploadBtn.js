@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Button, Message, Modal, toaster } from "rsuite";
 import { UseModalState } from "../../Hooks/UseModalState";
 import AvatarEditor from "react-avatar-editor";
-import { ref as dataBaseRef, set, update } from "firebase/database";
+import { ref as dataBaseRef, update } from "firebase/database";
 import { dataBase, storage } from "../../Firebase/Firebase";
 import { useProfile } from "../../Auth/AuthContext";
 import {
