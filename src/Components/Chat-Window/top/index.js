@@ -9,6 +9,7 @@ import RoomInfo from "./RoomInfo";
 
 const Top = () => {
   const history = useHistory();
+  const isAdmin = useCurrentRoom((state) => state.isAdmin);
   const name = useCurrentRoom((state) => state.name);
   const isMobile = useMediaQuery("(max-width:992px)");
 
@@ -30,7 +31,7 @@ const Top = () => {
           <span className="text-disappear">{name}</span>
         </h4>
         <ButtonToolbar className="ws-nowrap">
-          <EditRoomBtn />
+          {isAdmin && <EditRoomBtn />}
         </ButtonToolbar>
       </div>
       <div className="d-flex justify-content-between align-items-center">

@@ -2,7 +2,7 @@ import { Creative } from "@rsuite/icons";
 import { push, ref, serverTimestamp } from "firebase/database";
 import React, { forwardRef, useCallback, useRef, useState } from "react";
 import { Button, Form, Input, Message, Modal, Schema, toaster } from "rsuite";
-import { dataBase } from "../../Firebase/Firebase";
+import { auth, dataBase } from "../../Firebase/Firebase";
 import { UseModalState } from "../../Hooks/UseModalState";
 
 const INITIAL_FORM = {
@@ -35,6 +35,9 @@ const CreateRoomBtn = () => {
     const newRoomData = {
       ...formValue,
       createdAt: serverTimestamp(),
+      admins:{
+        [auth.currentUser.uid]: true,
+      }
     };
     try {
       const roomsRef = ref(dataBase, "rooms");
