@@ -3,12 +3,15 @@ import { Button } from "rsuite";
 import TimeAgo from "timeago-react";
 import { useCurrentRoom } from "../../../Auth/Current-room-context";
 import { auth } from "../../../Firebase/Firebase";
+import { useHover } from "../../../Hooks/UseHover";
 import ProfileAvatar from "../../Dashboard/ProfileAvatar";
 import PresenceDot from "../../PresenceDot";
 import ProfileInfoModal from "./ProfileInfoModal";
 
 const MessageItem = ({ message,handleAdminPass }) => {
   const { author, createdAt, text } = message;
+
+  const [selfRef, isHover] = useHover()
 
   const isAdmin = useCurrentRoom((state) => state.isAdmin);
   const admins = useCurrentRoom((state) => state.admins);
@@ -17,7 +20,7 @@ const MessageItem = ({ message,handleAdminPass }) => {
   const isAuthor = auth.currentUser.uid === author.uid;
   const canGrantAccess = isAdmin && !isAuthor;
   return (
-    <li className="padded mb-1">
+    <li className={`padded mb-1 cursor-pointer ${isHover? 'bg-black-02':''}`} ref={selfRef}>
       <div className="d-flex align-items-center font-bolder mb-1">
         <PresenceDot uid={author.uid} />
         <ProfileAvatar
