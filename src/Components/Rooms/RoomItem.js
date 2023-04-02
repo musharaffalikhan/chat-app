@@ -20,7 +20,7 @@ const RoomItem = ({ room }) => {
           <>
             <div className="d-flex align-item-center">
               <ProfileAvatar
-                src={lastMessage.author.avatar.avatar}
+                src={lastMessage.author.avatar}
                 name={lastMessage.author.name}
                 size="sm"
               />

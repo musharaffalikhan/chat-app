@@ -1,24 +1,34 @@
-import { ref, set } from "firebase/database";
+import { ref, update } from "firebase/database";
 import React from "react";
 import { Button, Divider, Drawer, Message, toaster } from "rsuite";
 import { useProfile } from "../../Auth/AuthContext";
 import { dataBase } from "../../Firebase/Firebase";
+import { getUserUpdates } from "../../Helper/Helpers";
 import EditableInput from "../EditableInput";
 import AvatarUploadBtn from "./AvatarUploadBtn";
 import ProviderBlock from "./ProviderBlock";
 
-const DashBoard = ({ onSignout }) => {
+const DashBoard = ({ onSignOut }) => {
   const { profile } = useProfile();
+
   const onSave = async (newData) => {
-    const userNicknameRef = ref(dataBase, `/profiles/${profile.uid}/name`);
     try {
-      await set(userNicknameRef, newData);
+      const updates = await getUserUpdates(
+        profile.uid,
+        "name",
+        newData,
+        dataBase
+      );
+      const dbRef = ref(dataBase);
+      await update(dbRef, updates);
+
       toaster.push(
         <Message type="success" closable>
-          Nickname has been updated
+          Updated successfully
         </Message>
       );
     } catch (error) {
+      console.log(error.message);
       toaster.push(
         <Message type="error" closable>
           {error.message}
@@ -26,6 +36,7 @@ const DashBoard = ({ onSignout }) => {
       );
     }
   };
+
   return (
     <>
       <Drawer.Header>
@@ -46,7 +57,7 @@ const DashBoard = ({ onSignout }) => {
           block
           color="red"
           appearance="primary"
-          onClick={onSignout}
+          onClick={onSignOut}
           size="sm"
         >
           Sign out

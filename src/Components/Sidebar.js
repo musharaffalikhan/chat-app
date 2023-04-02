@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Divider } from "rsuite";
+import { Button, Divider } from "rsuite";
 import CreateRoomBtn from "./Dashboard/CreateRoomBtn";
 import DashboardToggle from "./Dashboard/DashboardToggle";
 import ChatroomList from "./Rooms/ChatroomList";
 
 const Sidebar = () => {
   const topSidebarRef = useRef();
-  const [height,setHeight] = useState(0);
+  const [height, setHeight] = useState(0);
 
-  useEffect(()=>{
-    if(topSidebarRef.current){
-      setHeight(topSidebarRef.current.scrollHeight)
+  useEffect(() => {
+    if (topSidebarRef.current) {
+      setHeight(topSidebarRef.current.scrollHeight);
     }
-  },[topSidebarRef])
+  }, [topSidebarRef]);
   return (
     <>
       <div className="h-100 pt-2">
@@ -21,7 +21,7 @@ const Sidebar = () => {
           <CreateRoomBtn />
           <Divider>Join conversation</Divider>
         </div>
-        <ChatroomList aboveElHeight={height}/>
+        <ChatroomList aboveElHeight={height} />
       </div>
     </>
   );

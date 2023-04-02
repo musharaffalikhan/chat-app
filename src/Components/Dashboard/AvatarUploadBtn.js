@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Button, Message, Modal, toaster } from "rsuite";
 import { UseModalState } from "../../Hooks/UseModalState";
 import AvatarEditor from "react-avatar-editor";
-import { ref as dataBaseRef, set } from "firebase/database";
+import { ref as dataBaseRef, set, update } from "firebase/database";
 import { dataBase, storage } from "../../Firebase/Firebase";
 import { useProfile } from "../../Auth/AuthContext";
 import {
@@ -11,6 +11,7 @@ import {
   ref as storageRef,
 } from "firebase/storage";
 import ProfileAvatar from "./ProfileAvatar";
+import { getUserUpdates } from "../../Helper/Helpers";
 
 const fileInputTypes = ".png, .jpeg, .jpg";
 const acceptedFileTypes = ["image/png", "image/jpeg"];
@@ -62,16 +63,19 @@ const AvatarUploadBtn = () => {
       const metadata = {
         cacheControl: `public, max-age=${3600 * 24 * 3}`,
       };
-      const uploadAvatarResult = await uploadBytes(
-        avatarFileRef,
-        blob,
-        metadata
-      );
-      console.log("uploadedfile", uploadAvatarResult);
+      await uploadBytes(avatarFileRef, blob, metadata);
       const url = await getDownloadURL(avatarFileRef);
-      set(dataBaseRef(dataBase, `/profiles/${profile.uid}/avatar`), {
-        avatar: url,
-      });
+      // set(dataBaseRef(dataBase, `/profiles/${profile.uid}/avatar`), {
+      //   url,
+      // });
+      const updates = await getUserUpdates(
+        profile.uid,
+        "avatar",
+        url,
+        dataBase
+      );
+      const dbRef = dataBaseRef(dataBase);
+      await update(dbRef, updates);
 
       setIsLoading(false);
       toaster.push(
@@ -92,7 +96,7 @@ const AvatarUploadBtn = () => {
   return (
     <div className="mt-3 text-center">
       <ProfileAvatar
-        src={profile.avatar.avatar}
+        src={profile.avatar}
         name={profile.name}
         className="width-200 height-200 img-fullsize font-huge"
       />

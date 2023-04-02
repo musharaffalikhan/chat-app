@@ -11,7 +11,7 @@ const DashboardToggle = () => {
   const { isOpen, open, close } = UseModalState();
   const isMobile = useMediaQuery("(max-width: 992px)");
   const full = isMobile;
-
+  
   const onSignOut = useCallback(() => {
     signOut(auth);
     toaster.push(
