@@ -7,11 +7,13 @@ import { useHover } from "../../../Hooks/UseHover";
 import ProfileAvatar from "../../Dashboard/ProfileAvatar";
 import PresenceDot from "../../PresenceDot";
 import ProfileInfoModal from "./ProfileInfoModal";
+import { RiHeartFill } from "react-icons/ri";
+import IconBtnControl from "./IconBtnControl";
 
-const MessageItem = ({ message,handleAdminPass }) => {
+const MessageItem = ({ message, handleAdminPass }) => {
   const { author, createdAt, text } = message;
 
-  const [selfRef, isHover] = useHover()
+  const [selfRef, isHover] = useHover();
 
   const isAdmin = useCurrentRoom((state) => state.isAdmin);
   const admins = useCurrentRoom((state) => state.admins);
@@ -20,7 +22,10 @@ const MessageItem = ({ message,handleAdminPass }) => {
   const isAuthor = auth.currentUser.uid === author.uid;
   const canGrantAccess = isAdmin && !isAuthor;
   return (
-    <li className={`padded mb-1 cursor-pointer ${isHover? 'bg-black-02':''}`} ref={selfRef}>
+    <li
+      className={`padded mb-1 cursor-pointer ${isHover ? "bg-black-02" : ""}`}
+      ref={selfRef}
+    >
       <div className="d-flex align-items-center font-bolder mb-1">
         <PresenceDot uid={author.uid} />
         <ProfileAvatar
@@ -35,7 +40,12 @@ const MessageItem = ({ message,handleAdminPass }) => {
           className="p-0 ml-1 text-black"
         >
           {canGrantAccess && (
-            <Button block onClick={() => handleAdminPass(author.uid)} color="blue" appearance="primary">
+            <Button
+              block
+              onClick={() => handleAdminPass(author.uid)}
+              color="blue"
+              appearance="primary"
+            >
               {isMsgAuthorAdmin
                 ? "Remove admin permission"
                 : "Give admin in this room"}
@@ -45,6 +55,14 @@ const MessageItem = ({ message,handleAdminPass }) => {
         <TimeAgo
           datetime={createdAt}
           className="font-normal text-black-45 ml-2"
+        />
+        <IconBtnControl
+          {...(true ? { color: "red" } : {})}
+          isVisible
+          iconName={<RiHeartFill />}
+          tooltip="Like this message"
+          onClick={() => {}}
+          badgeContent={5}
         />
       </div>
       <div>

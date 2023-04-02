@@ -15,7 +15,6 @@ import {
   FacebookAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
-  signInWithRedirect,
 } from "firebase/auth";
 import { auth, dataBase } from "../Firebase/Firebase";
 import { ref, serverTimestamp, set } from "firebase/database";
