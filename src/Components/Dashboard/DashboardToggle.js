@@ -43,7 +43,7 @@ const DashboardToggle = () => {
           </Message>
         );
       });
-  }, [auth, close]);
+  }, [close]);
 
   return (
     <>

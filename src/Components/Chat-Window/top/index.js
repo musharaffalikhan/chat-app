@@ -1,9 +1,10 @@
 import { ArrowLeftLine } from "@rsuite/icons";
 import React, { memo } from "react";
 import { useHistory } from "react-router-dom";
-import { Button, ButtonToolbar } from "rsuite";
+import { ButtonToolbar } from "rsuite";
 import { useCurrentRoom } from "../../../Auth/Current-room-context";
 import { useMediaQuery } from "../../../Hooks/usemediaquery";
+import EditRoomBtn from "./EditRoomBtn";
 import RoomInfo from "./RoomInfo";
 
 const Top = () => {
@@ -28,11 +29,13 @@ const Top = () => {
           />
           <span className="text-disappear">{name}</span>
         </h4>
-        {/* <ButtonToolbar className="ws-nowrap">todo</ButtonToolbar> */}
+        <ButtonToolbar className="ws-nowrap">
+          <EditRoomBtn />
+        </ButtonToolbar>
       </div>
       <div className="d-flex justify-content-between align-items-center">
         <span>todo</span>
-        <RoomInfo/>
+        <RoomInfo />
       </div>
     </div>
   );
