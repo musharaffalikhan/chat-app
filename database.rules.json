@@ -10,14 +10,14 @@
       ".read": "auth !== null",
       "$room_id": {
         ".read": "auth !== null",
-        ".write": "!data.exists() || data.child('admins').child(auth.uid).val() == true",
+        ".write": "!data.exists() || (data.child('admins').child(auth.uid).val() === true || newData.child('users').child(auth.uid).val() === true)",
         "lastMessage": {
           ".write": "auth !== null"
         }
       }
     },
     "messages": {
-      ".indexOn": "author/uid, roomId",
+      ".indexOn": ["author/uid", "roomId"],
       ".read": "auth !== null",
       ".write": "auth !== null",
       "$message_id": {
@@ -31,7 +31,7 @@
         ".write": "$user_id === auth.uid"
       }
     },
-    ".read": false,
-    ".write": false
+    ".read": true,
+    ".write": true
   }
 }

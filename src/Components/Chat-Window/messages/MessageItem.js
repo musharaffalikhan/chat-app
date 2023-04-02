@@ -9,11 +9,13 @@ import PresenceDot from "../../PresenceDot";
 import ProfileInfoModal from "./ProfileInfoModal";
 import { RiHeartFill } from "react-icons/ri";
 import IconBtnControl from "./IconBtnControl";
+import { useMediaQuery } from "@mui/material";
 
-const MessageItem = ({ message, handleAdminPass }) => {
-  const { author, createdAt, text } = message;
+const MessageItem = ({ message, handleAdminPass, handleLike }) => {
+  const { author, createdAt, text, likes, likeCount } = message;
 
   const [selfRef, isHover] = useHover();
+  const isMobile = useMediaQuery("(max-width:992px)");
 
   const isAdmin = useCurrentRoom((state) => state.isAdmin);
   const admins = useCurrentRoom((state) => state.admins);
@@ -21,6 +23,9 @@ const MessageItem = ({ message, handleAdminPass }) => {
   const isMsgAuthorAdmin = admins.includes(author.uid);
   const isAuthor = auth.currentUser.uid === author.uid;
   const canGrantAccess = isAdmin && !isAuthor;
+
+  const canShowIcons = isMobile || isHover;
+  const isLiked = likes && Object.keys(likes).includes(auth.currentUser.uid);
   return (
     <li
       className={`padded mb-1 cursor-pointer ${isHover ? "bg-black-02" : ""}`}
@@ -57,12 +62,12 @@ const MessageItem = ({ message, handleAdminPass }) => {
           className="font-normal text-black-45 ml-2"
         />
         <IconBtnControl
-          {...(true ? { color: "red" } : {})}
-          isVisible
+          {...(isLiked)}
+          isVisible={canShowIcons}
           iconName={<RiHeartFill />}
           tooltip="Like this message"
-          onClick={() => {}}
-          badgeContent={5}
+          onClick={() => handleLike(message.id)}
+          badgeContent={likeCount}
         />
       </div>
       <div>

@@ -11,7 +11,7 @@ import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Message, toaster } from "rsuite";
-import { dataBase } from "../../../Firebase/Firebase";
+import { auth, dataBase } from "../../../Firebase/Firebase";
 import { transfromToArrWithId } from "../../../Helper/Helpers";
 import MessageItem from "./MessageItem";
 
@@ -57,6 +57,33 @@ const Messages = () => {
     },
     [chatId]
   );
+  const handleLike = useCallback(async (msgId) => {
+    let alertMsg;
+    const { uid } = auth.currentUser;
+    const messageRef = ref(dataBase, `/messages/${msgId}`);
+    await runTransaction(messageRef, (msg) => {
+      if (msg) {
+        if (msg.likes && msg.likes[uid]) {
+          msg.likeCount -= 1;
+          msg.likes[uid] = null;
+          alertMsg = "Like removed";
+        } else {
+          msg.likeCount += 1;
+          if (!msg.likes) {
+            msg.likes = {};
+          }
+          msg.likes[uid] = true;
+          alertMsg = "Like added";
+        }
+      }
+      return msg;
+    });
+    toaster.push(
+      <Message type="info" closable>
+        {alertMsg}
+      </Message>
+    );
+  }, []);
 
   return (
     <ul className="msg-list custom-scroll">
@@ -67,6 +94,7 @@ const Messages = () => {
             key={msg.id}
             message={msg}
             handleAdminPass={handleAdmin}
+            handleLike={handleLike}
           />
         ))}
     </ul>

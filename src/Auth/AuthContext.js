@@ -28,11 +28,13 @@ export const ProfileProvider = ({ children }) => {
   useEffect(() => {
     let userRef;
     let userStatusRef;
-    let dbref;
+    let dbref = null; // Initialize dbref to null
+
     const authUnsub = auth.onAuthStateChanged((authObj) => {
       if (authObj) {
         userStatusRef = ref(dataBase, `/status/${authObj.uid}`);
         userRef = ref(dataBase, `/profiles/${authObj.uid}`);
+
         onValue(userRef, (snap) => {
           const { name, createdAt, avatar } = snap.val();
           const data = {
@@ -45,11 +47,13 @@ export const ProfileProvider = ({ children }) => {
           setProfile(data);
           setIsLoading(false);
         });
+
         dbref = ref(dataBase, ".info/connected");
         onValue(dbref, (snapshot) => {
           if (!!snapshot.val() === false) {
             return;
           }
+
           onDisconnect(userStatusRef)
             .set(isOfflineForDatabase)
             .then(() => {
@@ -63,14 +67,21 @@ export const ProfileProvider = ({ children }) => {
         if (userStatusRef) {
           off(userStatusRef);
         }
-        off(dbref);
+        // Call off() on dbref only if it is defined
+        if (dbref) {
+          off(dbref);
+        }
         setProfile(null);
         setIsLoading(false);
       }
     });
+
     return () => {
       authUnsub();
-      off(dbref);
+      // Call off() on dbref only if it is defined
+      if (dbref) {
+        off(dbref);
+      }
       if (userRef) {
         off(userRef);
       }
@@ -79,6 +90,7 @@ export const ProfileProvider = ({ children }) => {
       }
     };
   }, []);
+
   return (
     <AuthContext.Provider value={{ profile, isLoading }}>
       {children}
