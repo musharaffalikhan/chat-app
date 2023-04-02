@@ -54,40 +54,42 @@ const Signin = () => {
   };
 
   return (
-    <Container>
-      <Grid className="mt-page">
-        <Row>
-          <Col xs={24} md={12} lg={12} mdOffset={6}>
-            <Panel>
-              <div className="text-center">
-                <h2>Welcome to chat</h2>
-                <p>Progressive chat platform</p>
-              </div>
-              <div className="mt-3">
-                <Button
-                  block
-                  color="green"
-                  appearance="primary"
-                  startIcon={<Google />}
-                  onClick={onGoogleSignIn}
-                >
-                  Continue with Google
-                </Button>
-                <Button
-                  block
-                  color="blue"
-                  appearance="primary"
-                  startIcon={<Facebook />}
-                  onClick={onFacebookSignIn}
-                >
-                  Continue with Facebook
-                </Button>
-              </div>
-            </Panel>
-          </Col>
-        </Row>
-      </Grid>
-    </Container>
+    <>
+      <Container>
+        <Grid className="mt-page">
+          <Row>
+            <Col xs={24} md={12} lg={12} mdOffset={6}>
+              <Panel>
+                <div className="text-center">
+                  <h2>Welcome to chat</h2>
+                  <p>Progressive chat platform</p>
+                </div>
+                <div className="mt-3">
+                  <Button
+                    block
+                    color="green"
+                    appearance="primary"
+                    startIcon={<Google />}
+                    onClick={onGoogleSignIn}
+                  >
+                    Continue with Google
+                  </Button>
+                  <Button
+                    block
+                    color="blue"
+                    appearance="primary"
+                    startIcon={<Facebook />}
+                    onClick={onFacebookSignIn}
+                  >
+                    Continue with Facebook
+                  </Button>
+                </div>
+              </Panel>
+            </Col>
+          </Row>
+        </Grid>
+      </Container>
+    </>
   );
 };
 
