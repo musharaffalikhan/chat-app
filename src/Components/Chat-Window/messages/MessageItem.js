@@ -10,8 +10,14 @@ import ProfileInfoModal from "./ProfileInfoModal";
 import { RiHeartFill } from "react-icons/ri";
 import IconBtnControl from "./IconBtnControl";
 import { useMediaQuery } from "@mui/material";
+import { Close } from "@rsuite/icons";
 
-const MessageItem = ({ message, handleAdminPass, handleLike }) => {
+const MessageItem = ({
+  message,
+  handleAdminPass,
+  handleLike,
+  handleDelete,
+}) => {
   const { author, createdAt, text, likes, likeCount } = message;
 
   const [selfRef, isHover] = useHover();
@@ -62,13 +68,21 @@ const MessageItem = ({ message, handleAdminPass, handleLike }) => {
           className="font-normal text-black-45 ml-2"
         />
         <IconBtnControl
-          {...(isLiked)}
+          {...isLiked}
           isVisible={canShowIcons}
           iconName={<RiHeartFill />}
           tooltip="Like this message"
           onClick={() => handleLike(message.id)}
           badgeContent={likeCount}
         />
+        {isAuthor && (
+          <IconBtnControl
+            isVisible={canShowIcons}
+            iconName={<Close />}
+            tooltip="Delete  this message"
+            onClick={() => handleDelete(message.id)}
+          />
+        )}
       </div>
       <div>
         <span className="word-break-all">{text}</span>

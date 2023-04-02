@@ -6,6 +6,7 @@ import {
   query,
   ref,
   runTransaction,
+  update,
 } from "firebase/database";
 import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
@@ -84,6 +85,38 @@ const Messages = () => {
       </Message>
     );
   }, []);
+  const handleDelete= useCallback(async(msgId)=>{
+    if(!window.confirm('Delete this message?')){
+      return;
+    }
+    const isLast = messages[messages.length-1].id === msgId;
+    const updates = {};
+    updates[`/messages/${msgId}`]=null;
+    if(isLast && messages.length>1){
+      updates[`/rooms/${chatId}/lastMessage`]={
+        ...messages[messages.length-2],
+        msgId:messages[messages.length-2].id,
+      }
+    }
+    if(isLast && messages.length === 1){
+      updates[`/rooms/${chatId}/lastMessage`]=null;
+    }
+    try {
+      const dbRef = ref(dataBase);
+      await update(dbRef, updates)
+      toaster.push(
+        <Message type="info" closable>
+          Message has been deleted!
+        </Message>
+      )
+    } catch (error) {
+      toaster.push(
+        <Message type="error" closable>
+          {error.message}
+        </Message>
+      )
+    }
+  },[chatId,messages])
 
   return (
     <ul className="msg-list custom-scroll">
@@ -95,6 +128,7 @@ const Messages = () => {
             message={msg}
             handleAdminPass={handleAdmin}
             handleLike={handleLike}
+            handleDelete={handleDelete}
           />
         ))}
     </ul>
