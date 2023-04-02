@@ -8,7 +8,7 @@ import EditableInput from "../EditableInput";
 import AvatarUploadBtn from "./AvatarUploadBtn";
 import ProviderBlock from "./ProviderBlock";
 
-const DashBoard = ({ onSignOut }) => {
+const DashBoard = ({ onSignout }) => {
   const { profile } = useProfile();
 
   const onSave = async (newData) => {
@@ -57,7 +57,7 @@ const DashBoard = ({ onSignOut }) => {
           block
           color="red"
           appearance="primary"
-          onClick={onSignOut}
+          onClick={onSignout}
           size="sm"
         >
           Sign out
