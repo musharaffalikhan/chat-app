@@ -47,7 +47,7 @@ export const ProfileProvider = ({ children }) => {
         });
         dbref = ref(dataBase, ".info/connected");
         onValue(dbref, (snapshot) => {
-          if (snapshot.val() === false) {
+          if (!!snapshot.val() === false) {
             return;
           }
           onDisconnect(userStatusRef)
