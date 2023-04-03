@@ -17,7 +17,6 @@
     "react-avatar-editor": "^13.0.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
-    "react-mic": "^12.4.6",
     "react-router-dom": "^5.2.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
@@ -39,7 +38,7 @@
     "workbox-streams": "^6.5.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node index.js",
     "build": "npm run clear && react-scripts build",
     "clear": "rm -rf build/*",
     "test": "react-scripts test",
