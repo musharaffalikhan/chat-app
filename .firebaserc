@@ -1,5 +1,22 @@
 {
-  "projects": {
-    "default": "chat-web-app-fccba"
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "hosting": {
+    "predeploy": [
+      "npm run build"
+    ],
+    "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
 }
