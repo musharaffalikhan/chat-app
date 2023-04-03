@@ -21,6 +21,7 @@ const AttachmentBtnModal = ({ afterUpload }) => {
     setFileList(filtered);
   };
   const onUpload = async () => {
+    setIsLoading(true);
     try {
       const uploadPromises = fileList.map((f) => {
         const storageRef = ref(storage, `/chat/${chatId}`);
