@@ -48,28 +48,6 @@ const Signin = () => {
         </Message>
       );
     }
-
-    try {
-      const { user } = await signInWithRedirect(auth, provider);
-      const currentUser = auth.currentUser;
-      if (currentUser) {
-        await set(ref(dataBase, `/profiles/${user.uid}`), {
-          name: user.displayName,
-          createdAt: serverTimestamp(),
-        });
-      }
-      toaster.push(
-        <Message type="success" closable>
-          Signed in
-        </Message>
-      );
-    } catch (error) {
-      toaster.push(
-        <Message type="error" closable>
-          {error.message}
-        </Message>
-      );
-    }
   };
   const onGoogleSignIn = () => {
     signInWithProvider(new GoogleAuthProvider());
