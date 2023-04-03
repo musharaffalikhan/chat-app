@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { InputGroup, Message, toaster } from "rsuite";
 import { ReactMic } from "react-mic";
 import { useParams } from "react-router-dom";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import { storage } from "../../../Firebase/Firebase";
 import { RiMicFill } from "react-icons/ri";
 
@@ -24,7 +24,7 @@ const AudioMsgBtn = ({ afterUpload }) => {
         const metadata = {
           cacheControl: `public, max-age=${3600 * 24 * 3}`,
         };
-        const snap = await uploadBytesResumable(fileRef, data.blob, metadata);
+        const snap = await uploadBytes(fileRef, data.blob, metadata);
         const file = {
           contentType: snap.metadata.contentType,
           name: snap.metadata.name,
@@ -50,7 +50,7 @@ const AudioMsgBtn = ({ afterUpload }) => {
         record={isRecording}
         className="d-none"
         onStop={onUpload}
-        mimeType="audio/mp3"
+        mimeType="audio/webm"
       />
     </InputGroup.Button>
   );
