@@ -38,8 +38,9 @@
     "workbox-streams": "^6.5.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node index.js",
     "build": "npm run clear && react-scripts build",
+    "clear": "rm -rf build/*",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
