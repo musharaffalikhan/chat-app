@@ -15,16 +15,42 @@ import {
   FacebookAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
 } from "firebase/auth";
 import { auth, dataBase } from "../Firebase/Firebase";
 import { ref, serverTimestamp, set } from "firebase/database";
 import Facebook from "@rsuite/icons/legacy/Facebook";
+import { useMediaQuery } from "@mui/material";
 
 const Signin = () => {
+  const isMobile = useMediaQuery("(max-width:992px)");
   // functions
   const signInWithProvider = async (provider) => {
     try {
-      const { user } = await signInWithPopup(auth, provider);
+      const signinMethod = isMobile ? signInWithRedirect : signInWithPopup;
+      const { user } = await signinMethod(auth, provider);
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        await set(ref(dataBase, `/profiles/${user.uid}`), {
+          name: user.displayName,
+          createdAt: serverTimestamp(),
+        });
+      }
+      toaster.push(
+        <Message type="success" closable>
+          Signed in
+        </Message>
+      );
+    } catch (error) {
+      toaster.push(
+        <Message type="error" closable>
+          {error.message}
+        </Message>
+      );
+    }
+
+    try {
+      const { user } = await signInWithRedirect(auth, provider);
       const currentUser = auth.currentUser;
       if (currentUser) {
         await set(ref(dataBase, `/profiles/${user.uid}`), {

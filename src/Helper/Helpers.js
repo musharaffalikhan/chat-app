@@ -1,5 +1,6 @@
 import { equalTo, get, orderByChild, query, ref } from "firebase/database";
 
+// Name initials function
 export function getNameInitials(name) {
   const splitName = name.toUpperCase().split(" ");
   if (splitName.length > 1) {
@@ -8,6 +9,7 @@ export function getNameInitials(name) {
   return splitName[0][0];
 }
 
+// Transformation to Array with id
 export function transfromToArrWithId(snapValue) {
   return snapValue
     ? Object.keys(snapValue).map((roomId) => {
@@ -16,10 +18,12 @@ export function transfromToArrWithId(snapValue) {
     : [];
 }
 
+// Transformation to Array
 export function transfromToArr(snapValue) {
   return snapValue ? Object.keys(snapValue): [];
 }
 
+// Functions to getting users update
 export async function getUserUpdates(userId, keyToUpdate, value, database) {
   const updates = {};
   updates[`profiles/${userId}/${keyToUpdate}`] = value;
@@ -50,4 +54,15 @@ export async function getUserUpdates(userId, keyToUpdate, value, database) {
       value;
   });
   return updates;
+}
+
+export function groupBy(array ,groupingKeyFn){
+  return array.reduce((result,item)=>{
+    const groupingKey = groupingKeyFn(item);
+    if(!result[groupingKey]){
+      result[groupingKey] = [];
+    }
+    result[groupingKey].push(item);  
+    return result;
+  },{})
 }
