@@ -6,7 +6,7 @@ import { Input, InputGroup, Message, toaster } from "rsuite";
 import { useProfile } from "../../../Auth/AuthContext";
 import { dataBase } from "../../../Firebase/Firebase";
 import AttachmentBtnModal from "./AttachmentBtnModal";
-import AudioMsgBtn from "./AudioMsgBtn";
+// import AudioMsgBtn from "./AudioMsgBtn";
 
 function assembleMessage(profile, chatId) {
   return {
@@ -103,7 +103,7 @@ const Bottom = () => {
     <div>
       <InputGroup>
       <AttachmentBtnModal afterUpload={afterUpload}/>
-      <AudioMsgBtn afterUpload={afterUpload}/>
+      {/* <AudioMsgBtn afterUpload={afterUpload}/> */}
         <Input
           placeholder="Write a new message here..."
           value={input}
