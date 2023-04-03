@@ -11,6 +11,17 @@ import { RiHeartFill } from "react-icons/ri";
 import IconBtnControl from "./IconBtnControl";
 import { useMediaQuery } from "@mui/material";
 import { Close } from "@rsuite/icons";
+import ImgBtnModal from "./ImgBtnModal";
+
+const renderFileMessage =(file)=>{
+  if(file.contentType.includes('image')){
+    return <div className="height-220">
+      <ImgBtnModal src={file.url} fileName={file.name}/>
+    </div>
+  }
+
+  return <a href={file.url}>Download {file.name}</a>
+}
 
 const MessageItem = ({
   message,
@@ -18,7 +29,7 @@ const MessageItem = ({
   handleLike,
   handleDelete,
 }) => {
-  const { author, createdAt, text, likes, likeCount } = message;
+  const { author, createdAt, text,file, likes, likeCount } = message;
 
   const [selfRef, isHover] = useHover();
   const isMobile = useMediaQuery("(max-width:992px)");
@@ -85,7 +96,9 @@ const MessageItem = ({
         )}
       </div>
       <div>
-        <span className="word-break-all">{text}</span>
+        {text && <span className="word-break-all">{text}</span>}
+        {file && renderFileMessage(file)}
+        
       </div>
     </li>
   );
