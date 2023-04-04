@@ -19,10 +19,8 @@ import {
 import { auth, dataBase } from "../Firebase/Firebase";
 import { ref, serverTimestamp, set } from "firebase/database";
 import Facebook from "@rsuite/icons/legacy/Facebook";
-import { useMediaQuery } from "@mui/material";
 
 const Signin = () => {
-  const isMobile = useMediaQuery("(max-width:992px)");
   // functions
   const signInWithProvider = async (provider) => {
     try {
