@@ -15,7 +15,6 @@ import {
   FacebookAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
-  signInWithRedirect,
 } from "firebase/auth";
 import { auth, dataBase } from "../Firebase/Firebase";
 import { ref, serverTimestamp, set } from "firebase/database";
@@ -27,8 +26,7 @@ const Signin = () => {
   // functions
   const signInWithProvider = async (provider) => {
     try {
-      const signinMethod = isMobile ? signInWithRedirect : signInWithPopup;
-      const { user } = await signinMethod(auth, provider);
+      const { user } = await signInWithPopup(auth, provider);
       const currentUser = auth.currentUser;
       if (currentUser) {
         await set(ref(dataBase, `/profiles/${user.uid}`), {
